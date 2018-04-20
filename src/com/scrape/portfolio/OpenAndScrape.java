@@ -1,5 +1,8 @@
 package com.scrape.portfolio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -18,6 +21,21 @@ public class OpenAndScrape {
 
 		OpenAndScrape openAndScrape = new OpenAndScrape();
 		openAndScrape.login(username, password);
+		
+		PrintPortfolio port = new PrintPortfolio();
+        Thread.sleep(4000);
+		
+		List<Stock> stockPortfolio = new ArrayList<>();
+
+        Thread.sleep(4000);
+        for (int i = 1; i <= 10; i++) {
+            Stock stock = openAndScrape.stockScrape(i);
+            stockPortfolio.add(stock);
+        }
+        
+        port.portfolioList(stockPortfolio);
+
+        port.printPortfolio();
 	
 	}
 	
@@ -54,5 +72,15 @@ public class OpenAndScrape {
 			System.out.println("To Portfolio Failed: " + e.getMessage());
 		}
 	}
+	
+	private Stock stockScrape(int i){
+        String symbol = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/section[2]/div[2]/table/tbody/tr[" + i + "]/td[1]/span/a")).getText();
+        String value = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/section[2]/div[2]/table/tbody/tr[" + i + "]/td[2]/span")).getText();
+        String dayAmtChg = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/section[2]/div[2]/table/tbody/tr[" + i + "]/td[3]/span")).getText();
+        String dayPctChg = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/section[2]/div[2]/table/tbody/tr[" + i + "]/td[4]/span")).getText();
+        String totalShrs = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/section[2]/div[2]/table/tbody/tr[" + i + "]/td[8]")).getText();
+
+        return new Stock(symbol, value, dayAmtChg, dayPctChg, totalShrs);
+    }
 
 }
