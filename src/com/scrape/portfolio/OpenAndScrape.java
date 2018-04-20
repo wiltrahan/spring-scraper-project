@@ -1,4 +1,4 @@
-package com.luv2code.springdemo.controller;
+package com.scrape.portfolio;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +20,6 @@ public class OpenAndScrape {
 		openAndScrape.login(username, password);
 	
 	}
-	
 	
 	private void login(String username, String password) {
 		String logScreen = "https://login.yahoo.com/config/login?.done=https%3A%2F%2Ffinance.yahoo.com%2Fportfolios&.intl=us&.lang=en-US&.src=finance";
