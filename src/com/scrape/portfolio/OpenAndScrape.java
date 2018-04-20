@@ -33,6 +33,15 @@ public class OpenAndScrape {
             stockPortfolio.add(stock);
         }
         
+        Total myTotals = openAndScrape.valuesScrape();
+
+        List<Total> totalPortfolio = new ArrayList<>();
+        totalPortfolio.add(myTotals);
+        
+        port.myTotals(totalPortfolio);
+
+        port.printTotals();
+        
         port.portfolioList(stockPortfolio);
 
         port.printPortfolio();
@@ -81,6 +90,14 @@ public class OpenAndScrape {
         String totalShrs = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/section[2]/div[2]/table/tbody/tr[" + i + "]/td[8]")).getText();
 
         return new Stock(symbol, value, dayAmtChg, dayPctChg, totalShrs);
+    }
+	
+	private Total valuesScrape() {
+        String portfolioTotal = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/header/div/div[1]/div/div[2]/p[1]")).getText();
+        String dayGain = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/header/div/div[1]/div/div[2]/p[2]/span")).getText();
+        String totalGain = driver.findElement(By.xpath("/html/body/div[2]/div[3]/section/header/div/div[1]/div/div[2]/p[3]/span")).getText();
+
+        return new Total(portfolioTotal, dayGain, totalGain);
     }
 
 }
