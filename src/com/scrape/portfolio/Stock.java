@@ -36,4 +36,12 @@ public class Stock {
         return totalShrs;
     }
 
+	@Override
+	public String toString() {
+		return "Stock [symbol=" + symbol + ", value=" + value + ", dayAmtChg=" + dayAmtChg + ", dayPctChg=" + dayPctChg
+				+ ", totalShrs=" + totalShrs + "]";
+	}
+    
+    
+
 }
