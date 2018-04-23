@@ -3,7 +3,6 @@ package com.scrape.portfolio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +29,15 @@ public class DateAndTime {
 	@Column(name="date_time_id")
 	private int date_time_id;
 	
-	public DateAndTime() {
-	
+	public DateAndTime(FormatTimeService formatTimeService) throws ParseException {
+		String date_time = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
+		.format(Calendar.getInstance()
+		.getTime());
+		
+		String[] timeSplit = date_time.split("\\s+");
+		time = formatTimeService.formatTime(timeSplit[1]);
+		date = timeSplit[0];
+		
 	}
 	
 	public int getId() {
@@ -50,7 +56,7 @@ public class DateAndTime {
 		this.date = date;
 	}
 
-	public String getTime() {
+	public String getTime()  {
 		return time;
 	}
 
@@ -66,28 +72,5 @@ public class DateAndTime {
 		this.date_time_id = date_time_id;
 	}
 
-	private static String formatTime(String time) throws ParseException {
-		//old format
-	    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-	    Date timeFormat = sdf.parse(time);
-	    //new format
-	    SimpleDateFormat sdf2 = new SimpleDateFormat("h:mm aa");
-	    //formatting the given time to new format with AM/PM
-	    return sdf2.format(timeFormat);
-		
-	}
-	
-//	private static final String CURRENT_TIME = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
-//																.format(Calendar.getInstance()
-//																.getTime());
-
 }
 
-//String date_time = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
-//.format(Calendar.getInstance()
-//.getTime());
-//String[] timeSplit = date_time.split("\\s+");
-//String time = formatTime(timeSplit[1]);
-//
-//System.out.println("Date: " + timeSplit[0]);
-//System.out.println("Time: " + time);
