@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 @Table(name="date_time")
 public class DateAndTime {
@@ -29,14 +33,15 @@ public class DateAndTime {
 	@Column(name="date_time_id")
 	private int date_time_id;
 	
-	public DateAndTime(FormatTimeService formatTimeService) throws ParseException {
-		String date_time = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss")
-		.format(Calendar.getInstance()
-		.getTime());
+	private FormatTimeService formatTimeService;
+	
+	@Autowired
+	public DateAndTime(FormatTimeService theFormatTimeService) throws ParseException {
+		String dateTime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+		String[] timeSplit = dateTime.split("\\s+");
 		
-		String[] timeSplit = date_time.split("\\s+");
-		time = formatTimeService.formatTime(timeSplit[1]);
-		date = timeSplit[0];
+		this.date = timeSplit[0];
+		this.time = theFormatTimeService.formatTime(timeSplit[1]);
 		
 	}
 	

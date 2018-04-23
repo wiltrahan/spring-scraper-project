@@ -2,6 +2,7 @@ package com.scrape.portfolio;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FormatTimeService implements FormatTime {
 	
+
 	@Override
 	public String formatTime(String time) throws ParseException {
 		//old format
